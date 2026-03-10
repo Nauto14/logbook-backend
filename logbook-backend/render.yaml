@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: logbook-backend
+    env: python
+    region: frankfurt # Can be changed, Render defaults to Oregon or Frankfurt usually
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "bash start.sh"
+    envVars:
+      - key: DATABASE_URL
+        value: "sqlite:////data/logbook.db"
+      - key: UPLOAD_DIR
+        value: "/data/uploads"
+      - key: CORS_ORIGINS
+        value: "https://logbook-frontend.vercel.app" # You should update this to your actual Vercel URL
+    disk:
+      name: logbook-data
+      mountPath: /data
+      sizeGB: 1
